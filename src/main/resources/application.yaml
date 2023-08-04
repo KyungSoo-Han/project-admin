@@ -36,3 +36,5 @@ spring:
     decoupled-logic: true
 server:
   port: 9091
+
+project.board.url: http://localhost:9090
