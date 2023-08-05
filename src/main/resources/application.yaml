@@ -36,6 +36,6 @@ spring:
   thymeleaf3:
     decoupled-logic: true
 server:
-  port: 9091
+  port: 8080
 
 project.board.url: http://localhost:9090
