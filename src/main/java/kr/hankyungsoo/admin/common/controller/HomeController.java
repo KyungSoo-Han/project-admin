@@ -13,4 +13,9 @@ public class HomeController {
 
         return "starter";
     }
+
+    @GetMapping("/article")
+    public String articleTest(){
+        return "management/articles";
+    }
 }

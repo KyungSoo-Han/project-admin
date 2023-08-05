@@ -10,6 +10,7 @@ logging:
     kr.hankyungsoo.admin: debug
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.web.client.RestTemplate: debug
 spring:
   devtools:
     livereload:
