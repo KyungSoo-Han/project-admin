@@ -7,6 +7,7 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,12 +33,24 @@ public class AdminAccount extends AuditingFields {
     private String introduce;
 
     @Builder
-    public AdminAccount(String userId, String password, RoleType roleType, String nickName, String introduce) {
+    public AdminAccount(String userId, String password, RoleType roleType, String nickName, String introduce,
+                        String createdBy) {
         this.userId = userId;
         this.password = password;
         this.roleType = roleType;
         this.nickName = nickName;
         this.introduce = introduce;
+        this.createdBy = createdBy;
+        this.modifiedBy = createdBy;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+
+    }
+
+    public void updateRole(RoleType roleType) throws Exception {
+        if(this.roleType == roleType)
+            throw new Exception("이미 설정된 Role타입입니다.");
+        this.roleType = roleType;
     }
 
     @Override
