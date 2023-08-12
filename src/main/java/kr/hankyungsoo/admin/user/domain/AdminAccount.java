@@ -2,17 +2,19 @@ package kr.hankyungsoo.admin.user.domain;
 
 import kr.hankyungsoo.admin.common.domain.AuditingFields;
 import kr.hankyungsoo.admin.user.domain.type.RoleType;
+import kr.hankyungsoo.admin.user.domain.type.RoleTypesConverter;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@ToString
+@ToString(callSuper = true)
 @Entity
 public class AdminAccount extends AuditingFields {
 
@@ -23,34 +25,46 @@ public class AdminAccount extends AuditingFields {
     @Column(nullable = false)
     private String password;
 
+    @Convert(converter = RoleTypesConverter.class)
     @Column(nullable = false)
-    private RoleType roleType;
+    private Set<RoleType> roleTypes = new LinkedHashSet<>();
+
+    @Column(length = 100) private String email;
 
     @Column(length = 50, nullable = false)
-    private String nickName;
+    private String nickname;
 
     @Column(length = 300)
-    private String introduce;
-
-    @Builder
-    public AdminAccount(String userId, String password, RoleType roleType, String nickName, String introduce,
-                        String createdBy) {
+    private String memo;
+    private AdminAccount(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createdBy) {
         this.userId = userId;
-        this.password = password;
-        this.roleType = roleType;
-        this.nickName = nickName;
-        this.introduce = introduce;
+        this.password = userPassword;
+        this.roleTypes = roleTypes;
+        this.email = email;
+        this.nickname = nickname;
+        this.memo = memo;
         this.createdBy = createdBy;
         this.modifiedBy = createdBy;
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
-
     }
 
-    public void updateRole(RoleType roleType) throws Exception {
-        if(this.roleType == roleType)
-            throw new Exception("이미 설정된 Role타입입니다.");
-        this.roleType = roleType;
+    public static AdminAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo) {
+        return AdminAccount.of(userId, userPassword, roleTypes, email, nickname, memo, null);
+    }
+
+    public static AdminAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo, String createdBy) {
+        return new AdminAccount(userId, userPassword, roleTypes, email, nickname, memo, createdBy);
+    }
+
+    public void addRoleType(RoleType roleType) {
+        this.getRoleTypes().add(roleType);
+    }
+
+    /*public void addRoleTypes(Collection<RoleType> roleTypes) {
+        this.getRoleTypes().addAll(roleTypes);
+    }*/
+
+    public void removeRoleType(RoleType roleType) {
+        this.getRoleTypes().remove(roleType);
     }
 
     @Override
