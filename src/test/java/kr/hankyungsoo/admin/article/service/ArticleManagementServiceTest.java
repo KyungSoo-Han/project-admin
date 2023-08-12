@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.hankyungsoo.admin.article.dto.ArticleDto;
 import kr.hankyungsoo.admin.article.response.ArticleClientResponse;
 import kr.hankyungsoo.admin.common.properties.ProjectProperties;
+import kr.hankyungsoo.admin.user.domain.type.RoleType;
 import kr.hankyungsoo.admin.user.dto.UserAccountDto;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;

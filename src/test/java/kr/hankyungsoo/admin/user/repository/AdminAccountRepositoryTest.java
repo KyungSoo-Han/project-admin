@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,50 +40,33 @@ class AdminAccountRepositoryTest {
 
     @Test
     public void givenAdminAccount_whenInserting_thenIsOK() throws Exception {
-        //Given
-        long preCount = adminAccountRepository.count();
+        // Given
+        long previousCount = adminAccountRepository.count();
+        AdminAccount adminAccount = AdminAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), null, null, null);
 
-        AdminAccount adminAccount = AdminAccount.builder()
-                .userId("test")
-                .roleType(RoleType.ROLE_ADMIN)
-                .nickName("hanks")
-                .password("1234")
-                .introduce("hello, i'm admin")
-                .createdBy("other-admin")
-                .build();
-
-        //When
+        // When
         adminAccountRepository.save(adminAccount);
 
-        //Then
-        assertThat(adminAccountRepository.count()).isEqualTo(preCount+1);
+        // Then
+        assertThat(adminAccountRepository.count()).isEqualTo(previousCount + 1);
 
     }
 
     @Test
     public void givenAdminAccountNewRole_whenUpdating_thenIsOK() throws Exception {
-        //Given
-        AdminAccount adminAccount = AdminAccount.builder()
-                .userId("test")
-                .roleType(RoleType.ROLE_ADMIN)
-                .nickName("hanks")
-                .password("1234")
-                .introduce("hello, i'm admin")
-                .createdBy("other-admin")
-                .build();
+        // Given
+        AdminAccount adminAccount = adminAccountRepository.getReferenceById("uno");
+        adminAccount.addRoleType(RoleType.DEVELOPER);
+        adminAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
+        adminAccount.removeRoleType(RoleType.ADMIN);
 
-        adminAccountRepository.save(adminAccount);
+        // When
+        AdminAccount updatedAccount = adminAccountRepository.saveAndFlush(adminAccount);
 
-        //When
-        AdminAccount updatingAdminAccount = adminAccountRepository.getReferenceById("test");
-        updatingAdminAccount.updateRole(RoleType.ROLE_USER);
-
-        //Then
-        System.out.println("adminAccount = " + adminAccount);
-        System.out.println("updatingAdminAccount = " + updatingAdminAccount);
-        assertThat(adminAccount).isEqualTo(updatingAdminAccount);
-        assertThat(updatingAdminAccount.getRoleType()).isEqualTo(RoleType.ROLE_USER);
-
+        // Then
+        assertThat(updatedAccount)
+                .hasFieldOrPropertyWithValue("userId", "uno")
+                .hasFieldOrPropertyWithValue("roleTypes", Set.of(RoleType.DEVELOPER, RoleType.USER));
 
 
     }
