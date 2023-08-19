@@ -6,3 +6,4 @@ insert into admin_account (user_id, password, role_types, nickname, email, memo,
   ('susan', '{noop}asdf1234', 'MANAGER,DEVELOPER', 'Susan', 'Susan@mail.com', 'I am Susan.', now(), 'admin', now(), 'admin'),
   ('jim', '{noop}asdf1234', 'USER', 'Jim', 'jim@mail.com', 'I am Jim.', now(), 'admin', now(), 'admin')
 ;
+
