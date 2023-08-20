@@ -57,7 +57,7 @@ class AdminAccountRepositoryTest {
         // Given
         AdminAccount adminAccount = adminAccountRepository.getReferenceById("uno");
         adminAccount.addRoleType(RoleType.DEVELOPER);
-        adminAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
+        //adminAccount.addRoleType(List.of(RoleType.USER, RoleType.USER));
         adminAccount.removeRoleType(RoleType.ADMIN);
 
         // When
