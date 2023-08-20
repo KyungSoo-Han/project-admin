@@ -38,7 +38,7 @@ public class Item  extends AuditingFields {
         this.memo = memo;
         this.business = business;
     }
-    public Item of(String itemId, String itemName, String unit, LocalDateTime expDate, String memo, Business business) {
+    public static Item of(String itemId, String itemName, String unit, LocalDateTime expDate, String memo, Business business) {
         return new Item(itemId,itemName,unit,expDate,memo,business);
     }
 
