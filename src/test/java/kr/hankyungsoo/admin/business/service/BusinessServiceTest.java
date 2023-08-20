@@ -33,7 +33,7 @@ class BusinessServiceTest {
                 "서울시 광진구 자양동",
                 "테스트");
 
-        given(businessRepository.save(dto.toEntity())).willReturn(createBusiness());
+        given(businessRepository.save(any(Business.class))).willReturn(createBusiness());
 
         //When
         sut.save(dto);
@@ -52,7 +52,7 @@ class BusinessServiceTest {
                 "서울시 광진구 자양동",
                 "테스트"
         );
-        ReflectionTestUtils.setField(business, "id", 2L);
+        ReflectionTestUtils.setField(business, "id", 1L);
 
         return business;
 
