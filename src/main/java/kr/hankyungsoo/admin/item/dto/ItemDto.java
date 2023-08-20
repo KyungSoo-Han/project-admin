@@ -42,4 +42,8 @@ public class ItemDto  {
                 entity.getMemo());
     }
 
+    public Item toEntity(){
+        return Item.of(itemId,itemName,unit,expDate,memo, businessDto.toEntity());
+    }
+
 }
