@@ -44,7 +44,9 @@ public class AdminAccount extends AuditingFields {
         this.nickname = nickname;
         this.memo = memo;
         this.createdBy = createdBy;
+        this.createdAt = LocalDateTime.now();
         this.modifiedBy = createdBy;
+        this.modifiedAt= LocalDateTime.now();
     }
 
     public static AdminAccount of(String userId, String userPassword, Set<RoleType> roleTypes, String email, String nickname, String memo) {
