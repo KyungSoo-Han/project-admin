@@ -8,4 +8,4 @@ insert into admin_account (user_id, password, role_types, nickname, email, memo,
 ;
 
 insert into business (business_id, created_at, created_by, modified_at, modified_by, address, biz_number, memo, name, owner_name, phone_number)
-values(1, now(), 'admin', now(), null, '수원시 장안구 화산로', '100-22-33049', '첫번째 사업장', '오늘의떡케이크', '한경수', '010-9171-6166' )
+values(1, now(), 'admin', now(), 'admin', '수원시 장안구 화산로', '100-22-33049', '첫번째 사업장', '오늘의떡케이크', '한경수', '010-9171-6166' )
