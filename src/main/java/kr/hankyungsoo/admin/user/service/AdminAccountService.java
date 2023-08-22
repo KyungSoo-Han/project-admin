@@ -26,9 +26,10 @@ public class AdminAccountService {
                 .map(AdminAccountDto::from);
     }
 
-    public AdminAccountDto saveUser(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
+    public AdminAccountDto saveUser(AdminAccountDto dto) {
         return AdminAccountDto.from(
-                adminAccountRepository.save(AdminAccount.of(username, password, roleTypes, email, nickname, memo, username))
+                adminAccountRepository.save(AdminAccount.of(dto.userId(), dto.userPassword(), dto.roleTypes(), dto.email(),
+                            dto.nickname(), dto.memo(), dto.createdBy()))
         );
     }
     public void deleteUser(String username) {
