@@ -11,12 +11,17 @@
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
 
   <!--<attr sel="#signup-form" th:action="${formStatus?.update} ? '/admin/' + ${article.id} + '/sign-up-form' : '/admin/sign-up-form'" th:method="post">-->
-  <attr sel="#signup-form" th:action="@{/admin/sign-up-form}" th:method="post">
+  <attr sel="#signup-form" th:action="@{/admin/sign-up-form}"  th:method="post"  th:object="${adminAccount}" >
+    <attr sel="#globalErrors" th:class="field-error2" th:if="${#fields.hasGlobalErrors()}"/>
+    <attr sel="#field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"  />
+
     <attr sel="#userId" th:value="${adminAccount?.userId} ?: _" />
-    <attr sel="#userPassword" th:text="${adminAccount?.userPassword} ?: _" />
-    <attr sel="#hashtag" th:value="${article?.hashtag} ?: _" />
+    <attr sel="#userPassword" th:field="${adminAccount.userPassword}" />
     <attr sel="#submit-button" th:text="${formStatus?.description} ?: _" />
     <attr sel="#cancel-button" th:onclick="'history.back()'" />
+
+    <attr sel="#password-error"  th:errors="${adminAccount.userPassword}" />
+
   </attr>
 
 </thlogic>
