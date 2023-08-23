@@ -9,12 +9,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,15 +29,27 @@ import java.util.Collections;
 public class AdminAccountController {
 
     private final AdminAccountService adminAccountService;
+    private final AdminAccountValidator adminAccountValidator;
+
 
     @GetMapping("/sign-up-form")
-    public String signUpForm(ModelMap map){
-        map.addAttribute("formStatus", FormStatus.CREATE);
+    public String signUpForm(@ModelAttribute("adminAccount") AdminAccountRequest adminAccount){
+       /* map.addAttribute("formStatus", FormStatus.CREATE);
+        map.addAttribute("adminAccount",new AdminAccountRequest());*/
         return "/user/sign-up";
     }
 
     @PostMapping("/sign-up-form")
-    public String insertAdminAccount(AdminAccountRequest request){
+    public String insertAdminAccount(@ModelAttribute("adminAccount") AdminAccountRequest request, BindingResult bindingResult){
+        log.debug("target = {}", bindingResult.getTarget());
+
+        adminAccountValidator.validate(request, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            log.info("errors={} ", bindingResult);
+            return "user/sign-up";
+        }
+
         request.setRoleTypes(Collections.singleton(RoleType.ADMIN));
         request.setCreatedBy(request.getEmail());
         request.setModifiedBy(request.getEmail());
