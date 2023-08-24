@@ -34,8 +34,6 @@ public class AdminAccountController {
 
     @GetMapping("/sign-up-form")
     public String signUpForm(@ModelAttribute("adminAccount") AdminAccountRequest adminAccount){
-       /* map.addAttribute("formStatus", FormStatus.CREATE);
-        map.addAttribute("adminAccount",new AdminAccountRequest());*/
         return "/user/sign-up";
     }
 
