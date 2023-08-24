@@ -15,13 +15,20 @@
     <attr sel="#globalErrors" th:class="field-error2" th:if="${#fields.hasGlobalErrors()}"/>
     <attr sel="#field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"  />
 
-    <attr sel="#userId" th:value="${adminAccount?.userId} ?: _" />
+    <attr sel="#userId" th:field="${adminAccount.userId}" />
     <attr sel="#userPassword" th:field="${adminAccount.userPassword}" />
+    <attr sel="#userPassword2" th:field="${adminAccount.userPassword2}" />
+    <attr sel="#nickname" th:field="${adminAccount.nickname}"  />
+    <attr sel="#email" th:field="${adminAccount.email}"  />
+
+    <attr sel="#userId-error"  th:errors="${adminAccount.userId}" />
+    <attr sel="#password-error"  th:errors="${adminAccount.userPassword}" />
+    <attr sel="#password-error2"  th:errors="${adminAccount.userPassword2}" />
+    <attr sel="#nickname-error"  th:errors="${adminAccount.nickname}" />
+    <attr sel="#email-error"  th:errors="${adminAccount.email}" />
+
     <attr sel="#submit-button" th:text="${formStatus?.description} ?: _" />
     <attr sel="#cancel-button" th:onclick="'history.back()'" />
-
-    <attr sel="#password-error"  th:errors="${adminAccount.userPassword}" />
-
   </attr>
 
 </thlogic>
