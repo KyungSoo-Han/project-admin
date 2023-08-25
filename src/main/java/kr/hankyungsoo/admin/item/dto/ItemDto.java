@@ -1,5 +1,6 @@
 package kr.hankyungsoo.admin.item.dto;
 
+import kr.hankyungsoo.admin.business.domain.Business;
 import kr.hankyungsoo.admin.business.dto.BusinessDto;
 import kr.hankyungsoo.admin.item.domain.Item;
 import kr.hankyungsoo.admin.item.domain.type.ItemType;
@@ -21,16 +22,16 @@ public class ItemDto  {
     private String itemName;
     private String unit;
     private ItemType itemType;
-    private BusinessDto businessDto;
+    private Long businessId;
     private String memo;
 
     public static ItemDto of(String itemId,
                              String itemName,
                              String unit,
                              ItemType itemType,
-                             BusinessDto businessDto,
+                             Long businessId,
                              String memo) {
-        return new ItemDto(itemId, itemName, unit, itemType, businessDto, memo);
+        return new ItemDto(itemId, itemName, unit, itemType, businessId, memo);
     }
 
     public static ItemDto from(Item entity){
@@ -39,12 +40,12 @@ public class ItemDto  {
                 entity.getItemName(),
                 entity.getUnit(),
                 entity.getItemType(),
-                BusinessDto.from(entity.getBusiness()),
+                entity.getBusiness().getId(),
                 entity.getMemo());
     }
 
-    public Item toEntity(){
-        return Item.of(itemId,itemName,unit, itemType, memo, businessDto.toEntity());
+    public Item toEntity(Business business){
+        return Item.of(itemId,itemName,unit, itemType, memo, business);
     }
 
 }

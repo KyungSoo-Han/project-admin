@@ -22,16 +22,16 @@ public class ItemRequest {
     private String itemName;
     private String unit;
     private ItemType itemType;
-    private BusinessDto businessDto;
+    private Long businessId;
     private String memo;
 
     public static ItemRequest of(String itemId,
                                  String itemName,
                                  String unit,
                                  ItemType itemType,
-                                 BusinessDto businessDto,
+                                 Long businessId,
                                  String memo) {
-        return new ItemRequest(itemId, itemName, unit, itemType, businessDto, memo);
+        return new ItemRequest(itemId, itemName, unit, itemType, businessId, memo);
     }
 /*
     public static ItemRequest from(Item entity){
@@ -45,7 +45,7 @@ public class ItemRequest {
     }*/
 
     public ItemDto toDto(){
-        return ItemDto.of(itemId,itemName,unit, itemType, businessDto,memo);
+        return ItemDto.of(itemId,itemName,unit, itemType, businessId, memo);
     }
 
 }
