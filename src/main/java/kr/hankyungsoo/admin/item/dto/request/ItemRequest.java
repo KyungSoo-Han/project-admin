@@ -45,7 +45,7 @@ public class ItemRequest {
     }*/
 
     public ItemDto toDto(){
-        return ItemDto.of(itemId,itemName,unit,businessDto,memo);
+        return ItemDto.of(itemId,itemName,unit, itemType, businessDto,memo);
     }
 
 }
