@@ -48,4 +48,10 @@ public class ItemController {
         itemService.saveItem(item.toDto());
         return "redirect:/";
     }
+
+    @GetMapping("/list")
+    public String list(Model model){
+        return "item/list";
+    }
+
 }
