@@ -5,7 +5,7 @@
   <attr sel="#management-category" th:classappend="${#request.requestURI.startsWith('/management')} ? 'active'" />
   <attr
           sel="#item-management"
-          th:href="@{/item/form}"
+          th:href="@{/item/list}"
   />
   <attr
       sel="#article-management"
