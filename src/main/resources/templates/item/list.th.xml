@@ -9,7 +9,7 @@
   <attr sel="#layout-footer" th:replace="layouts/layout-footer :: footer" />
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
 
-  <attr sel="#main-table">
+  <attr sel="#datatable">
     <attr sel="thead/tr">
       <attr sel="th[0]" th:text="'품목 코드'" />
       <attr sel="th[1]" th:text="'품목 명'" />
