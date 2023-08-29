@@ -1,8 +1,12 @@
 package kr.hankyungsoo.admin.item.controller;
 
 import kr.hankyungsoo.admin.item.dto.request.ItemRequest;
+import kr.hankyungsoo.admin.item.dto.response.ItemResponse;
 import kr.hankyungsoo.admin.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +23,11 @@ public class ItemController {
     private final ItemService itemService;
     private final ItemValidator itemValidator;
 
-    @InitBinder
+   /* @InitBinder
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(itemValidator);
     }
-
+*/
     @GetMapping("/form")
     public String form(Model model){
         model.addAttribute("item", new ItemRequest());
@@ -46,11 +50,12 @@ public class ItemController {
         item.setBusinessId(1L);
 
         itemService.saveItem(item.toDto());
-        return "redirect:/";
+        return "redirect:/item/list";
     }
 
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(Model model,@PageableDefault(size = 10, sort = "itemId", direction = Sort.Direction.DESC) Pageable pageable){
+        model.addAttribute("items", itemService.getItems(pageable).map(dto-> ItemResponse.from(dto)));
         return "item/list";
     }
 
