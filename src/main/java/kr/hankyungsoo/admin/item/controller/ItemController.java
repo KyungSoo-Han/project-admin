@@ -40,11 +40,15 @@ public class ItemController {
 
     private final ItemValidator itemValidator;
 
-   /* @InitBinder
+  /*
+    //itemRequest에 대한 유효성 검사를 하지만 데이터 조회시에도 같은 객체를 사용하기 때문에 문제가 발생
+    //데이터 조회시에는 유효성 검사가 필요없음
+    @InitBinder
     public void init(WebDataBinder dataBinder) {
         dataBinder.addValidators(itemValidator);
     }
-*/
+    */
+
     @GetMapping("/form")
     public String form(Model model){
         model.addAttribute("item", new ItemRequest());
@@ -61,6 +65,8 @@ public class ItemController {
     @PostMapping("/form")
     public String insertItem(@Validated @ModelAttribute("item") ItemRequest item, BindingResult bindingResult){
 
+        itemValidator.validate(item, bindingResult);
+
         if(bindingResult.hasErrors()){
             return "item/form";
         }
@@ -71,7 +77,7 @@ public class ItemController {
     }
 
     @GetMapping("/list")
-    public String list(@PageableDefault(size = 5, sort = "itemId", direction = Sort.Direction.ASC) Pageable pageable,
+    public String list(@PageableDefault(size = 10, sort = "itemId", direction = Sort.Direction.DESC) Pageable pageable,
                        ModelMap map) throws JsonProcessingException {
         Page<ItemResponse> items = itemService.getItems(pageable).map(dto -> ItemResponse.from(dto));
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), items.getTotalPages());
