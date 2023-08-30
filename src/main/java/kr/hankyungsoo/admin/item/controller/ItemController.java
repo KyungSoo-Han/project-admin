@@ -1,26 +1,43 @@
 package kr.hankyungsoo.admin.item.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.hankyungsoo.admin.common.service.PaginationService;
 import kr.hankyungsoo.admin.item.dto.request.ItemRequest;
 import kr.hankyungsoo.admin.item.dto.response.ItemResponse;
 import kr.hankyungsoo.admin.item.service.ItemService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/item")
 @Controller
 public class ItemController {
 
     private final ItemService itemService;
+    private final PaginationService paginationService;
+
     private final ItemValidator itemValidator;
 
    /* @InitBinder
@@ -54,8 +71,15 @@ public class ItemController {
     }
 
     @GetMapping("/list")
-    public String list(Model model,@PageableDefault(size = 10, sort = "itemId", direction = Sort.Direction.DESC) Pageable pageable){
-        model.addAttribute("items", itemService.getItems(pageable).map(dto-> ItemResponse.from(dto)));
+    public String list(@PageableDefault(size = 5, sort = "itemId", direction = Sort.Direction.ASC) Pageable pageable,
+                       ModelMap map) throws JsonProcessingException {
+        Page<ItemResponse> items = itemService.getItems(pageable).map(dto -> ItemResponse.from(dto));
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), items.getTotalPages());
+
+        map.addAttribute("items",items );
+        map.addAttribute("paginationBarNumbers", barNumbers);
+        log.debug("map={}",map);
+
         return "item/list";
     }
 

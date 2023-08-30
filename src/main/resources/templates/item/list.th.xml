@@ -9,8 +9,8 @@
   <attr sel="#layout-footer" th:replace="layouts/layout-footer :: footer" />
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
   <attr sel="#addItem" th:onclick="|location.href='@{/item/form}'| "/>
-  <attr sel="#datatable">
-    <attr sel="thead/tr">
+  <attr sel="#datatable" th:classappend="table-hover">
+    <attr sel="thead/tr" th:class="thead-dark">
       <attr sel="th[0]" th:text="'품목 코드'" />
       <attr sel="th[1]" th:text="'품목 명'" />
       <attr sel="th[2]" th:text="'단위'" />
@@ -27,5 +27,26 @@
         <!--<attr sel="td[3]/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm:ss')}" />-->
       </attr>
     </attr>
+
+  </attr>
+
+  <attr sel="#pagination">
+    <attr sel="li[0]/a"
+          th:text="'previous'"
+          th:href="@{/item/list(page=${items.number - 1})}"
+          th:class="'page-link' + (${items.number} <= 0 ? ' disabled' : '')"
+    />
+    <attr sel="li[1]" th:class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+      <attr sel="a"
+            th:text="${pageNumber + 1}"
+            th:href="@{/item/list(page=${pageNumber})}"
+            th:class="'page-link' + (${pageNumber} == ${items.number} ? ' disabled' : '')"
+      />
+    </attr>
+    <attr sel="li[2]/a"
+          th:text="'next'"
+          th:href="@{/item/list(page=${items.number + 1})}"
+          th:class="'page-link' + (${items.number} >= ${items.totalPages - 1} ? ' disabled' : '')"
+    />
   </attr>
 </thlogic>
