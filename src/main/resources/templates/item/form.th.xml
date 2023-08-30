@@ -12,11 +12,11 @@
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
 
   <attr sel="#item-form" th:action="@{/item/form}"  th:method="post"  th:object="${item}" >
-    <attr sel="#itemId" th:field="${item.itemId}" />
-    <attr sel="#itemName" th:field="${item.itemName}" />
-    <attr sel="#itemType" th:field="${item.itemType}" />
-    <attr sel="#unit" th:field="${item.unit}" />
-    <attr sel="#memo" th:field="${item.memo}" />
+    <attr sel="#itemId" th:classappend="${#fields.hasErrors('itemId')} ? ' is-invalid'" th:field="${item.itemId}" />
+    <attr sel="#itemName" th:classappend="${#fields.hasErrors('itemName')} ? ' is-invalid'" th:field="${item.itemName}" />
+    <attr sel="#itemType" th:classappend="${#fields.hasErrors('itemType')} ? ' is-invalid'" th:field="${item.itemType}" />
+    <attr sel="#unit" th:classappend="${#fields.hasErrors('unit')} ? ' is-invalid'" th:field="${item.unit}" />
+    <attr sel="#memo" th:classappend="${#fields.hasErrors('memo')} ? ' is-invalid'" th:field="${item.memo}" />
 
     <attr sel="#itemId-error"  th:errors="${item.itemId}" />
     <attr sel="#itemName-error"  th:errors="${item.itemName}" />
