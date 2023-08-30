@@ -15,13 +15,13 @@
     <attr sel="#globalErrors" th:class="field-error2" th:if="${#fields.hasGlobalErrors()}"/>
     <attr sel="#field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"  />
 
-    <attr sel="#userId" th:field="${adminAccount.userId}" />
-    <attr sel="#userPassword" th:field="${adminAccount.userPassword}" />
-    <attr sel="#userPassword2" th:field="${adminAccount.userPassword2}" />
-    <attr sel="#nickname" th:field="${adminAccount.nickname}"  />
-    <attr sel="#email" th:field="${adminAccount.email}"  />
+    <attr sel="#userId"  th:classappend="${#fields.hasErrors('userId')} ? ' is-invalid'" th:field="${adminAccount.userId}" />
+    <attr sel="#userPassword" th:classappend="${#fields.hasErrors('userPassword')} ? ' is-invalid'" th:field="${adminAccount.userPassword}" />
+    <attr sel="#userPassword2" th:classappend="${#fields.hasErrors('userPassword2')} ? ' is-invalid'" th:field="${adminAccount.userPassword2}" />
+    <attr sel="#nickname" th:classappend="${#fields.hasErrors('nickname')} ? ' is-invalid'" th:field="${adminAccount.nickname}"  />
+    <attr sel="#email" th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'" th:field="${adminAccount.email}"  />
 
-    <attr sel="#userId-error"  th:errors="${adminAccount.userId}" />
+    <attr sel="#userId-error" th:errors="${adminAccount.userId}" />
     <attr sel="#password-error"  th:errors="${adminAccount.userPassword}" />
     <attr sel="#password-error2"  th:errors="${adminAccount.userPassword2}" />
     <attr sel="#nickname-error"  th:errors="${adminAccount.nickname}" />
