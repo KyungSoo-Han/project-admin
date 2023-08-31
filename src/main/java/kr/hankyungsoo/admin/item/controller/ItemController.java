@@ -92,6 +92,7 @@ public class ItemController {
 
     @PostMapping("/{itemId}/form")
     public String updateItem(@Validated @PathVariable String itemId, @ModelAttribute("item") ItemRequest item,
+                             @RequestParam Long businessId,
                              BindingResult bindingResult){
 
         itemValidator.validate(item,bindingResult);
@@ -105,5 +106,8 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
-
+    @PostMapping("/{itemId}/delete")
+    public String deleteItem(@PathVariable String itemId, @RequestParam Long businessId){
+        itemService.deleteItem(itemId, businessId);
+    }
 }

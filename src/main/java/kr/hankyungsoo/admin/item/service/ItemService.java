@@ -42,4 +42,9 @@ public class ItemService {
         Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
         item.update(dto);
     }
+
+    public void deleteItem(String itemId, Long businessId) {
+        itemRepository.deleteByIdAndBusiness_BusinessId(itemId, businessId);
+
+    }
 }
