@@ -109,5 +109,6 @@ public class ItemController {
     @PostMapping("/{itemId}/delete")
     public String deleteItem(@PathVariable String itemId, @RequestParam Long businessId){
         itemService.deleteItem(itemId, businessId);
+        return "redirect:/item/list";
     }
 }
