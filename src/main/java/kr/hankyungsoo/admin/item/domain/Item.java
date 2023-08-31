@@ -3,6 +3,7 @@ package kr.hankyungsoo.admin.item.domain;
 import kr.hankyungsoo.admin.business.domain.Business;
 import kr.hankyungsoo.admin.common.domain.AuditingFields;
 import kr.hankyungsoo.admin.item.domain.type.ItemType;
+import kr.hankyungsoo.admin.item.dto.ItemDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,4 +45,11 @@ public class Item  extends AuditingFields {
         return new Item(itemId,itemName,unit,itemType,memo,business);
     }
 
+    public void update(ItemDto dto) {
+        this.itemName = dto.getItemName();
+        this.memo=dto.getMemo();
+        this.unit=dto.getUnit();
+        this.itemType = dto.getItemType();
+
+    }
 }
