@@ -36,4 +36,15 @@ public class ItemService {
     public Page<ItemDto> getItems(Pageable pageable) {
         return itemRepository.findAll(pageable).map(entity->ItemDto.from(entity));
     }
+
+    @Transactional
+    public void updateItem(String itemId, ItemDto dto) {
+        Item item = itemRepository.findById(itemId).orElseThrow(EntityNotFoundException::new);
+        item.update(dto);
+    }
+
+    public void deleteItem(String itemId, Long businessId) {
+        itemRepository.deleteByIdAndBusiness_BusinessId(itemId, businessId);
+
+    }
 }

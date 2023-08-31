@@ -49,6 +49,20 @@ public class ItemController {
     }
     */
 
+
+    @GetMapping("/list")
+    public String list(@PageableDefault(size = 10, sort = "itemId", direction = Sort.Direction.DESC) Pageable pageable,
+                       ModelMap map) throws JsonProcessingException {
+        Page<ItemResponse> items = itemService.getItems(pageable).map(dto -> ItemResponse.from(dto));
+        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), items.getTotalPages());
+
+        map.addAttribute("items",items );
+        map.addAttribute("paginationBarNumbers", barNumbers);
+        log.debug("map={}",map);
+
+        return "item/list";
+    }
+
     @GetMapping("/form")
     public String form(Model model){
         model.addAttribute("item", new ItemRequest());
@@ -76,17 +90,24 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
-    @GetMapping("/list")
-    public String list(@PageableDefault(size = 10, sort = "itemId", direction = Sort.Direction.DESC) Pageable pageable,
-                       ModelMap map) throws JsonProcessingException {
-        Page<ItemResponse> items = itemService.getItems(pageable).map(dto -> ItemResponse.from(dto));
-        List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), items.getTotalPages());
+    @PostMapping("/{itemId}/form")
+    public String updateItem(@Validated @PathVariable String itemId, @ModelAttribute("item") ItemRequest item,
+                             @RequestParam Long businessId,
+                             BindingResult bindingResult){
 
-        map.addAttribute("items",items );
-        map.addAttribute("paginationBarNumbers", barNumbers);
-        log.debug("map={}",map);
+        itemValidator.validate(item,bindingResult);
 
-        return "item/list";
+        if(bindingResult.hasErrors()){
+            return "item/form";
+        }
+
+        itemService.updateItem(itemId, item.toDto());
+
+        return "redirect:/item/list";
     }
 
+    @PostMapping("/{itemId}/delete")
+    public String deleteItem(@PathVariable String itemId, @RequestParam Long businessId){
+        itemService.deleteItem(itemId, businessId);
+    }
 }

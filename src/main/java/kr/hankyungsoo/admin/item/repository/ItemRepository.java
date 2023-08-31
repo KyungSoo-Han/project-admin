@@ -7,4 +7,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface ItemRepository extends JpaRepository<Item, String> {
 
+    void deleteByIdAndBusiness_BusinessId(String itemId, Long businessId);
 }
