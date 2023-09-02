@@ -39,8 +39,9 @@ public class ItemService {
         item.update(dto);
     }
 
-    public void deleteItem(String itemId, Long businessId) {
-        itemRepository.deleteItem(itemId, businessId);
+    @Transactional
+    public void deleteItem(Long businessId, String itemId ) {
+        itemRepository.deleteItem(businessId, itemId);
 
     }
 }
