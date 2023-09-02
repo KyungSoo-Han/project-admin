@@ -8,6 +8,7 @@ import kr.hankyungsoo.admin.user.service.AdminAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,15 @@ public class AdminAccountController {
     private final AdminAccountService adminAccountService;
     private final AdminAccountValidator adminAccountValidator;
 
+    @GetMapping("/loginForm")
+    public String loginForm(Model model ){
+        return "/user/login";
+    }
+    @PostMapping("/login")
+    public String login(@ModelAttribute("adminAccount") AdminAccountRequest request){
+
+        return "redirect:/";
+    }
 
     @GetMapping("/sign-up-form")
     public String signUpForm(@ModelAttribute("adminAccount") AdminAccountRequest adminAccount){
