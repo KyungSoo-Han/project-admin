@@ -23,10 +23,10 @@ class ItemServiceTest {
         String itemId = "001";
         Long businessId = 1L;
 
-        willDoNothing().given(itemRepository).deleteItem(itemId,businessId);
+        willDoNothing().given(itemRepository).deleteItem(businessId,itemId);
 
-        sut.deleteItem(itemId,businessId);
+        sut.deleteItem(businessId,itemId);
 
-        then(itemRepository).should().deleteItem(itemId,businessId);
+        then(itemRepository).should().deleteItem(businessId,itemId);
     }
 }
