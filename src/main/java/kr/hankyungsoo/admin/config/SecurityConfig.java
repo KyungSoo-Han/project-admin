@@ -40,7 +40,11 @@ public class SecurityConfig  {
                     .failureUrl("/admin/sign-up-form")
                     .loginProcessingUrl("/admin/login")
                     .and()
-                .logout(logout -> logout.logoutSuccessUrl("/"))
+                .logout()
+                    .logoutSuccessUrl("/")
+                    .logoutUrl("/admin/logout")
+                    .and()
+                //.logout(logout -> logout.logoutSuccessUrl("/"))
                 //.oauth2Login(withDefaults())
                 .build();
     }
