@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ import java.util.Set;
 public class AdminAccountService implements UserDetailsService {
 
     private final AdminAccountRepository adminAccountRepository;
-
+    private final PasswordEncoder passwordEncoder;
     @Transactional(readOnly = true)
     public Optional<AdminAccountDto> searchUser(String username) {
         return adminAccountRepository.findById(username)
@@ -34,7 +35,7 @@ public class AdminAccountService implements UserDetailsService {
 
     public AdminAccountDto saveUser(AdminAccountDto dto) {
         return AdminAccountDto.from(
-                adminAccountRepository.save(AdminAccount.of(dto.userId(), dto.userPassword(), dto.roleTypes(), dto.email(),
+                adminAccountRepository.save(AdminAccount.of(dto.userId(), passwordEncoder.encode(dto.userPassword()), dto.roleTypes(), dto.email(),
                             dto.nickname(), dto.memo(), dto.createdBy()))
         );
     }
