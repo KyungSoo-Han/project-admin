@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <thlogic>
   <attr sel="#layout-head" th:replace="layouts/layout-head :: common_head(~{::title}, (~{::link} ?: ~{}))" />
-<attr sel="#layout-header" th:replace="layouts/layout-header :: header" />
+  <attr sel="#layout-header" th:replace="layouts/layout-header :: header" />
   <!--  <attr sel="#layout-left-aside" th:replace="layouts/layout-left-aside :: aside" />-->
 
   <attr sel="#layout-main" th:replace="layouts/layout-main-table :: common_main_table('회원 가입','회원 등록', (~{::#main-table} ?: ~{}))" />
@@ -11,7 +11,7 @@
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
 
   <!--<attr sel="#signup-form" th:action="${formStatus?.update} ? '/admin/' + ${article.id} + '/sign-up-form' : '/admin/sign-up-form'" th:method="post">-->
-  <attr sel="#signup-form" th:action="@{/admin/sign-up-form}"  th:method="post"  th:object="${adminAccount}" >
+  <attr sel="#join-form" th:action="@{/admin/joinForm}"  th:method="post"  th:object="${adminAccount}" >
     <attr sel="#globalErrors" th:class="field-error2" th:if="${#fields.hasGlobalErrors()}"/>
     <attr sel="#field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"  />
 
