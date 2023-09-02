@@ -27,27 +27,35 @@
                 <th class="col-5">품목 명</th>
                 <th class="col-1">단위</th>
                 <th class="col-2">품목 유형</th>
+                <th class="col-1"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td><a data-toggle="modal" data-target="#layout-modal">새 글</a></td>
-                <td>Uno</td>
-                <td></td>
-              </tr>
+            <tr>
+              <td>1</td>
+              <td><a data-toggle="modal" data-target="#layout-modal">새 글</a></td>
+              <td>Uno</td>
+              <td></td>
+              <td>
+                <form id="item-delete" method="post" role="form" >
+                  <button type="submit" class="btn btn-xs btn-danger">삭제</button>
+                </form>
+              </td>
+            </tr>
               <tr>
                 <td>2</td>
                 <td><a data-toggle="modal" data-target="#layout-modal">아무글</a></td>
                 <td>Uno</td>
                 <td></td>
+                <td><button class="btn btn-xs btn-danger">삭제</button></td>
               </tr>
-              <tr>
-                <td>3</td>
-                <td><a data-toggle="modal" data-target="#layout-modal">스프링 부트 블로그 정리</a></td>
-                <td>Uno</td>
-                <td></td>
-              </tr>
+            <tr>
+              <td>3</td>
+              <td><a data-toggle="modal" data-target="#layout-modal">스프링 부트 블로그 정리</a></td>
+              <td>Uno</td>
+              <td></td>
+              <td><button class="btn btn-xs btn-danger">삭제</button></td>
+            </tr>
             </tbody>
             <tfoot>
 

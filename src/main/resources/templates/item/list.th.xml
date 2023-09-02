@@ -24,6 +24,12 @@
         <attr sel="td[1]/a" th:text="${item.itemName}" th:href="@{#}" th:data-id="${item.itemId}" />
         <attr sel="td[2]" th:text="${item.unit}" />
         <attr sel="td[3]" th:text="${item.itemType}" />
+        <attr sel="td[4]">
+          <attr sel="#item-delete" th:action="'/item/1/' +${item.itemId} +'/delete'"  th:method="post"  >
+
+          </attr>
+        </attr>
+        <!--<attr sel="td[4]/button" th:onclick="test([[${item.itemId}]])"/>-->
         <!--<attr sel="td[3]/time" th:datetime="${article.createdAt}" th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm:ss')}" />-->
       </attr>
     </attr>
