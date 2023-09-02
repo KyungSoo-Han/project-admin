@@ -14,7 +14,7 @@
   <attr sel="#login-form" th:action="@{/admin/login}"  th:method="post"  th:object="${item}" >
 
     <attr sel="#cancel-button" th:onclick="'history.back()'" />
-
   </attr>
+  <attr sel="#sign-up-form" th:href="@{/admin/joinForm}"/>
 
 </thlogic>
