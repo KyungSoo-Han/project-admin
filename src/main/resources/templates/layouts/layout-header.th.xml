@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <thlogic>
   <attr sel="#header-nav-home" th:href="@{/}" th:text="'Home'" />
-  <attr sel="#header-nav-admin-members" th:href="@{/admin/sign-up-form}" th:text="'SignUp'" />
+  <attr sel="#header-nav-admin-members"  sec:authorize="!isAuthenticated()" th:href="@{/admin/sign-up-form}" th:text="'SignUp'" />
   <attr sel="#login" sec:authorize="!isAuthenticated()" th:href="@{/oauth2/authorization/kakao}" />
-  <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/logout}" />
+  <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/admin/logout}" />
 </thlogic>
