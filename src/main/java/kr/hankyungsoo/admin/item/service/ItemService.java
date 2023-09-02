@@ -4,18 +4,14 @@ import kr.hankyungsoo.admin.business.domain.Business;
 import kr.hankyungsoo.admin.business.repository.BusinessRepository;
 import kr.hankyungsoo.admin.item.domain.Item;
 import kr.hankyungsoo.admin.item.dto.ItemDto;
-import kr.hankyungsoo.admin.item.dto.request.ItemRequest;
-import kr.hankyungsoo.admin.item.dto.response.ItemResponse;
 import kr.hankyungsoo.admin.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,8 +39,9 @@ public class ItemService {
         item.update(dto);
     }
 
-    public void deleteItem(String itemId, Long businessId) {
-        itemRepository.deleteByIdAndBusiness_BusinessId(itemId, businessId);
+    @Transactional
+    public void deleteItem(Long businessId, String itemId ) {
+        itemRepository.deleteItem(businessId, itemId);
 
     }
 }

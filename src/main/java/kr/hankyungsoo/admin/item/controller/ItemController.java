@@ -24,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +65,9 @@ public class ItemController {
     }
 
     @GetMapping("/form")
-    public String form(Model model){
+    public String form(Model model, HttpSession httpsession ){
         model.addAttribute("item", new ItemRequest());
+        log.debug("httpsession = {}", httpsession);
         return "/item/form";
     }
 
@@ -92,7 +94,6 @@ public class ItemController {
 
     @PostMapping("/{itemId}/form")
     public String updateItem(@Validated @PathVariable String itemId, @ModelAttribute("item") ItemRequest item,
-                             @RequestParam Long businessId,
                              BindingResult bindingResult){
 
         itemValidator.validate(item,bindingResult);
@@ -106,8 +107,9 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
-    @PostMapping("/{itemId}/delete")
-    public String deleteItem(@PathVariable String itemId, @RequestParam Long businessId){
-        itemService.deleteItem(itemId, businessId);
+    @PostMapping("/{businessId}/{itemId}/delete")
+    public String deleteItem(@PathVariable Long businessId, @PathVariable String itemId){
+        itemService.deleteItem(businessId, itemId );
+        return "redirect:/item/list";
     }
 }

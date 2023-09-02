@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public record AdminPrincipal(
-        String username,
+        String userId,
         String password,
         Collection<? extends GrantedAuthority> authorities,
         String email,
@@ -23,13 +23,13 @@ public record AdminPrincipal(
         Map<String, Object> oAuth2Attributes
 ) implements UserDetails, OAuth2User {
 
-    public static AdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
-        return AdminPrincipal.of(username, password, roleTypes, email, nickname, memo, Map.of());
+    public static AdminPrincipal of(String userId, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
+        return AdminPrincipal.of(userId, password, roleTypes, email, nickname, memo, Map.of());
     }
 
-    public static AdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
+    public static AdminPrincipal of(String userId, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
         return new AdminPrincipal(
-                username,
+                userId,
                 password,
                 roleTypes.stream()
                         .map(RoleType::getRoleName)
@@ -56,7 +56,7 @@ public record AdminPrincipal(
 
     public AdminAccountDto toDto() {
         return AdminAccountDto.of(
-                username,
+                userId,
                 password,
                 authorities.stream()
                         .map(GrantedAuthority::getAuthority)
@@ -70,7 +70,7 @@ public record AdminPrincipal(
     }
 
 
-    @Override public String getUsername() { return username; }
+    @Override public String getUsername() { return userId; }
     @Override public String getPassword() { return password; }
     @Override public Collection<? extends GrantedAuthority> getAuthorities() { return authorities; }
 
@@ -80,6 +80,6 @@ public record AdminPrincipal(
     @Override public boolean isEnabled() { return true; }
 
     @Override public Map<String, Object> getAttributes() { return oAuth2Attributes; }
-    @Override public String getName() { return username; }
+    @Override public String getName() { return userId; }
 
 }
