@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#layout-head" th:replace="layouts/layout-head :: common_head(~{::title}, (~{::link} ?: ~{}))" />
+  <attr sel="#layout-header" th:replace="layouts/layout-header :: header" />
+  <!--  <attr sel="#layout-left-aside" th:replace="layouts/layout-left-aside :: aside" />-->
+
+  <attr sel="#layout-main" th:replace="layouts/layout-main-table :: common_main_table('회원 가입','회원 등록', (~{::#main-table} ?: ~{}))" />
+
+  <attr sel="#layout-right-aside" th:replace="layouts/layout-right-aside :: aside" />
+  <attr sel="#layout-footer" th:replace="layouts/layout-footer :: footer" />
+  <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
+
+  <!--<attr sel="#signup-form" th:action="${formStatus?.update} ? '/admin/' + ${article.id} + '/sign-up-form' : '/admin/sign-up-form'" th:method="post">-->
+  <attr sel="#join-form" th:action="@{/admin/joinForm}"  th:method="post"  th:object="${adminAccount}" >
+    <attr sel="#globalErrors" th:class="field-error2" th:if="${#fields.hasGlobalErrors()}"/>
+    <attr sel="#field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"  />
+
+    <attr sel="#userId"  th:classappend="${#fields.hasErrors('userId')} ? ' is-invalid'" th:field="${adminAccount.userId}" />
+    <attr sel="#userPassword" th:classappend="${#fields.hasErrors('userPassword')} ? ' is-invalid'" th:field="${adminAccount.userPassword}" />
+    <attr sel="#userPassword2" th:classappend="${#fields.hasErrors('userPassword2')} ? ' is-invalid'" th:field="${adminAccount.userPassword2}" />
+    <attr sel="#nickname" th:classappend="${#fields.hasErrors('nickname')} ? ' is-invalid'" th:field="${adminAccount.nickname}"  />
+    <attr sel="#email" th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'" th:field="${adminAccount.email}"  />
+
+    <attr sel="#userId-error" th:errors="${adminAccount.userId}" />
+    <attr sel="#password-error"  th:errors="${adminAccount.userPassword}" />
+    <attr sel="#password-error2"  th:errors="${adminAccount.userPassword2}" />
+    <attr sel="#nickname-error"  th:errors="${adminAccount.nickname}" />
+    <attr sel="#email-error"  th:errors="${adminAccount.email}" />
+
+    <attr sel="#submit-button" th:text="${formStatus?.description} ?: _" />
+    <attr sel="#cancel-button" th:onclick="'history.back()'" />
+  </attr>
+
+</thlogic>
