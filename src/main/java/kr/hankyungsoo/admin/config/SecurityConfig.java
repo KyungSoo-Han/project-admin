@@ -37,7 +37,7 @@ public class SecurityConfig  {
                     .loginPage("/admin/loginForm")
                     .usernameParameter("userId")
                     .passwordParameter("password")
-                    .failureUrl("/admin/sign-up-form")
+                    .failureUrl("/admin/joinForm")
                     .loginProcessingUrl("/admin/login")
                     .and()
                 .logout()
@@ -48,6 +48,11 @@ public class SecurityConfig  {
                 //.oauth2Login(withDefaults())
                 .build();
     }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
  /*   @Bean
     public UserDetailsService userDetailsService(AdminAccountService adminAccountService){
         return username -> adminAccountService
