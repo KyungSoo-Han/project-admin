@@ -56,33 +56,6 @@ public class AdminAccountController {
         return "redirect:/";
     }
 
-    @GetMapping("/sign-up-form")
-    public String signUpForm(@ModelAttribute("adminAccount") AdminAccountRequest adminAccount){
-        return "/user/sign-up";
-    }
-
-    @PostMapping("/sign-up-form")
-    public String signUpAdminAccount(@ModelAttribute("adminAccount") AdminAccountRequest request, BindingResult bindingResult){
-        log.debug("target = {}", bindingResult.getTarget());
-
-        adminAccountValidator.validate(request, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            log.info("errors={} ", bindingResult);
-            return "user/sign-up";
-        }
-
-        request.setRoleTypes(Collections.singleton(RoleType.ADMIN));
-        request.setCreatedBy(request.getEmail());
-        request.setModifiedBy(request.getEmail());
-        request.setCreatedAt(LocalDateTime.now());
-        request.setModifiedAt(LocalDateTime.now());
-
-        log.debug("request = {}",request.toString());
-        adminAccountService.saveUser(request.toDto());
-
-        return "redirect:/";
-    }
     @GetMapping("/joinForm")
     public String joinForm(@ModelAttribute("adminAccount") AdminAccountRequest adminAccount){
         return "/user/join";
