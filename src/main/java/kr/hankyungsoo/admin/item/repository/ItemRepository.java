@@ -12,4 +12,7 @@ public interface ItemRepository extends JpaRepository<Item, String> {
     @Modifying
     @Query("delete from Item i where i.business.id = :businessId and i.itemId = :itemId ")
     void deleteItem(@Param("businessId") Long businessId, @Param("itemId")String itemId );
+
+    @Query("select MAX(CAST(i.itemId AS int)) + 1 from Item i where i.business.id = :businessId")
+    int nextItemId(@Param("businessId") Long businessId);
 }
