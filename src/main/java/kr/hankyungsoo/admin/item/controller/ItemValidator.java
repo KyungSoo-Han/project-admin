@@ -20,9 +20,9 @@ public class ItemValidator implements Validator {
     public void validate(Object target, Errors errors) {
         ItemRequest itemRequest = (ItemRequest) target;
 
-        if(!StringUtils.hasText(itemRequest.getItemId())){
+        /*if(!StringUtils.hasText(itemRequest.getItemId())){
             errors.rejectValue("itemId","required",null,null);
-        }
+        }*/
         if(!StringUtils.hasText(itemRequest.getItemName())){
             errors.rejectValue("itemName","required",null,null);
         }
