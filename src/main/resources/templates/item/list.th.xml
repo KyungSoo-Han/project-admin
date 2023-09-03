@@ -25,6 +25,7 @@
         <attr sel="td[2]" th:text="${item.unit}" />
         <attr sel="td[3]" th:text="${item.itemType}" />
         <attr sel="td[4]">
+          <attr sel="#item-update" th:href="'/item/1/' +${item.itemId} +''"   >
           <attr sel="#item-delete" th:action="'/item/1/' +${item.itemId} +'/delete'"  th:method="post"  >
 
           </attr>

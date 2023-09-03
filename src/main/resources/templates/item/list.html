@@ -36,7 +36,11 @@
               <td><a data-toggle="modal" data-target="#layout-modal">새 글</a></td>
               <td>Uno</td>
               <td></td>
-              <td>
+              <td class="justify-content-center" style="display: flex; ">
+                <form role="form" style="margin-right: 3px" >
+                  <a id ="item-update" href="#" class="btn btn-xs btn-info">수정</a>
+                </form>
+
                 <form id="item-delete" method="post" role="form" >
                   <button type="submit" class="btn btn-xs btn-danger">삭제</button>
                 </form>
@@ -54,7 +58,9 @@
               <td><a data-toggle="modal" data-target="#layout-modal">스프링 부트 블로그 정리</a></td>
               <td>Uno</td>
               <td></td>
-              <td><button class="btn btn-xs btn-danger">삭제</button></td>
+              <td>
+                <button class="btn btn-xs btn-danger">삭제</button>
+              </td>
             </tr>
             </tbody>
             <tfoot>
