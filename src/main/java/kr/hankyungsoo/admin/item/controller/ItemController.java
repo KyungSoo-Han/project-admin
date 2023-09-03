@@ -92,6 +92,13 @@ public class ItemController {
         return "redirect:/item/list";
     }
 
+    @GetMapping("/{businessId}/{itemId}")
+    public String formForUpdate(@PathVariable Long businessId, @PathVariable String itemId , Model model){
+        ItemResponse itemResponse = itemService.getItem(businessId, itemId);
+        model.addAttribute("item", itemResponse);
+        //log.debug("httpsession = {}", httpsession);
+        return "/item/form";
+    }
     @PostMapping("/{itemId}/form")
     public String updateItem(@Validated @PathVariable String itemId, @ModelAttribute("item") ItemRequest item,
                              BindingResult bindingResult){

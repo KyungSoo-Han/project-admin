@@ -4,6 +4,7 @@ import kr.hankyungsoo.admin.business.domain.Business;
 import kr.hankyungsoo.admin.business.repository.BusinessRepository;
 import kr.hankyungsoo.admin.item.domain.Item;
 import kr.hankyungsoo.admin.item.dto.ItemDto;
+import kr.hankyungsoo.admin.item.dto.response.ItemResponse;
 import kr.hankyungsoo.admin.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,5 +51,11 @@ public class ItemService {
     public void deleteItem(Long businessId, String itemId ) {
         itemRepository.deleteItem(businessId, itemId);
 
+    }
+
+    public ItemResponse getItem(Long businessId, String itemId) {
+        Item item = itemRepository.getItem(businessId, itemId);
+        ItemDto dto = ItemDto.from(item);
+        return ItemResponse.from(dto);
     }
 }
