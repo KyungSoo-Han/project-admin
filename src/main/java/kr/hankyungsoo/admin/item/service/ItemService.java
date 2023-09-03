@@ -6,6 +6,7 @@ import kr.hankyungsoo.admin.item.domain.Item;
 import kr.hankyungsoo.admin.item.dto.ItemDto;
 import kr.hankyungsoo.admin.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -23,6 +25,11 @@ public class ItemService {
 
     @Transactional
     public void saveItem(ItemDto dto){
+        int getNextItemId = itemRepository.nextItemId(dto.getBusinessId());
+        String nextItemId = String.format("%05d", getNextItemId);
+        log.debug("nextItemId = {}", nextItemId);
+        dto.setItemId(nextItemId);
+
         Business business = businessRepository.findById(dto.getBusinessId())
                                                 .orElseThrow(EntityNotFoundException::new);
 
