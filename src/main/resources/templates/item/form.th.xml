@@ -12,7 +12,7 @@
   <attr sel="#layout-scripts" th:replace="layouts/layout-scripts :: script" />
 
   <attr sel="#item-form" th:action="@{/item/form}"  th:method="post"  th:object="${item}" >
-    <attr sel="#itemId" th:classappend="${#fields.hasErrors('itemId')} ? ' is-invalid'" th:field="${item.itemId}" />
+    <attr sel="#itemId" th:classappend="${#fields.hasErrors('itemId')} ? ' is-invalid'" th:field="${item.itemId}" th:value="${item.itemId}" />
     <attr sel="#itemName" th:classappend="${#fields.hasErrors('itemName')} ? ' is-invalid'" th:field="${item.itemName}" />
     <attr sel="#itemType" th:classappend="${#fields.hasErrors('itemType')} ? ' is-invalid'" th:field="${item.itemType}" />
     <attr sel="#unit" th:classappend="${#fields.hasErrors('unit')} ? ' is-invalid'" th:field="${item.unit}" />

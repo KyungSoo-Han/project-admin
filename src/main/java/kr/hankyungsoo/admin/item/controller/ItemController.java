@@ -19,6 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -79,7 +80,7 @@ public class ItemController {
      * TODO: Business Id 연결 작업 필요
      */
     @PostMapping("/form")
-    public String insertItem(@Validated @ModelAttribute("item") ItemRequest item, BindingResult bindingResult){
+    public String saveItem(@Validated @ModelAttribute("item") ItemRequest item, BindingResult bindingResult){
 
         itemValidator.validate(item, bindingResult);
 
@@ -87,8 +88,16 @@ public class ItemController {
             return "item/form";
         }
         item.setBusinessId(1L);
+        log.debug("item = {}", item);
+        if(StringUtils.hasText(item.getItemId())){
+            itemService.updateItem(item.getItemId(), item.toDto());
+            log.debug("UPDATE item.getItemId() = {}", item.getItemId());
+        }
+        else{
+            itemService.saveItem(item.toDto());
+            log.debug("INSERT item.getItemId() = {}", item.getItemId());
+        }
 
-        itemService.saveItem(item.toDto());
         return "redirect:/item/list";
     }
 
